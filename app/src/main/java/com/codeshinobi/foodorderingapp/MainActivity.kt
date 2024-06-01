@@ -40,6 +40,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.codeshinobi.foodorderingapp.models.Screens
 import com.codeshinobi.foodorderingapp.services.IdeaService
+import com.codeshinobi.foodorderingapp.services.MenuItemService
 import com.codeshinobi.foodorderingapp.ui.screens.HomeScreen
 import com.codeshinobi.foodorderingapp.ui.screens.IdeasScreen
 
@@ -54,7 +55,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 //            AppContent(Appwrite.account, Appwrite.ideas)
-            BottomNavigationBar(Appwrite.account, Appwrite.ideas)
+            BottomNavigationBar(Appwrite.account, Appwrite.ideas, Appwrite.menuItems)
         }
     }
 }
@@ -109,7 +110,7 @@ private fun AppBottomBar(screen: MutableState<Screen>) {
 //    }
 //}
 @Composable
-fun BottomNavigationBar(accountService: AccountService, ideasService: IdeaService) {
+fun BottomNavigationBar(accountService: AccountService, ideasService: IdeaService, menuItemsService: MenuItemService) {
     var navigationSelectedItem by remember {
         mutableStateOf(0)
     }
@@ -157,7 +158,7 @@ fun BottomNavigationBar(accountService: AccountService, ideasService: IdeaServic
                 modifier = Modifier.padding(paddingValues = paddingValues)
             ) {
                 composable(Screens.Home.route) {
-                    HomeScreen(navController, user)
+                    HomeScreen(navController, user, menuItemsService)
                 }
                 composable(Screens.Search.route) {
                     IdeasScreen(user.value, ideasService, navController)
