@@ -14,3 +14,4 @@
 .cxx
 local.properties
 app/src/main/res/java/com/codeshinobi/foodorderingapp/Appwrite.kt
+app/src/main/res/java/com/codeshinobi/foodorderingapp/AppwriteService.kt
