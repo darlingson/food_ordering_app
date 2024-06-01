@@ -6,18 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,19 +24,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.codeshinobi.foodorderingapp.services.AccountService
 import com.codeshinobi.foodorderingapp.services.Appwrite
 import com.codeshinobi.foodorderingapp.ui.screens.UserScreen
-import com.codeshinobi.foodorderingapp.ui.theme.FoodOrderingAppTheme
 import io.appwrite.models.User
 import androidx.compose.material.icons.filled.List
-import com.codeshinobi.foodorderingapp.services.Appwrite.ideas
 import com.codeshinobi.foodorderingapp.services.IdeaService
+import com.codeshinobi.foodorderingapp.ui.screens.HomeScreen
 import com.codeshinobi.foodorderingapp.ui.screens.IdeasScreen
 
 enum class Screen {
-    User, Ideas
+    Home, User, Ideas
 }
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +54,12 @@ private fun AppBottomBar(screen: MutableState<Screen>) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
+            IconButton(onClick = { screen.value = Screen.Home }) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Icon(Icons.Default.Home, contentDescription = "Home")
+                    Text("Home")
+                }
+            }
             IconButton(onClick = { screen.value = Screen.Ideas }) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(Icons.Default.List, contentDescription = "Ideas")
@@ -88,6 +90,7 @@ private fun AppContent(accountService: AccountService, ideasService: IdeaService
     Scaffold(bottomBar = { AppBottomBar(screen) }) { padding ->
         Column(modifier = Modifier.padding(padding)) {
             when (screen.value) {
+                Screen.Home -> HomeScreen(user)
                 Screen.User -> UserScreen(user, accountService)
                 else -> IdeasScreen(user.value, ideasService)
             }
