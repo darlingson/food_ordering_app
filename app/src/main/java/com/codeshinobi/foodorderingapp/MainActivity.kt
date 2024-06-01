@@ -151,21 +151,20 @@ fun BottomNavigationBar(accountService: AccountService, ideasService: IdeaServic
             }
         }
     ) {paddingValues ->
-        NavHost(
-            navController = navController,
-            startDestination = Screens.Home.route,
-            modifier = Modifier.padding(paddingValues = paddingValues)) {
-            composable(Screens.Home.route) {
-                HomeScreen(
-                    navController, user
-                )
+            NavHost(
+                navController = navController,
+                startDestination = Screens.Home.route,
+                modifier = Modifier.padding(paddingValues = paddingValues)
+            ) {
+                composable(Screens.Home.route) {
+                    HomeScreen(navController, user)
+                }
+                composable(Screens.Search.route) {
+                    IdeasScreen(user.value, ideasService, navController)
+                }
+                composable(Screens.Profile.route) {
+                    UserScreen(user, accountService, navController)
+                }
             }
-            composable(Screens.Search.route) {
-                IdeasScreen(user.value, ideasService, navController)
-            }
-            composable(Screens.Profile.route) {
-                UserScreen(user, accountService, navController)
-            }
-        }
     }
 }

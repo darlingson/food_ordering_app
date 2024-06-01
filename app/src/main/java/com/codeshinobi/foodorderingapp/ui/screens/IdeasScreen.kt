@@ -1,5 +1,6 @@
 package com.codeshinobi.foodorderingapp.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,7 +37,8 @@ fun IdeasScreen(
 ) {
     var ideas by remember { mutableStateOf<List<Document<Map<String, Any>>>>(listOf()) }
     val coroutineScope = rememberCoroutineScope()
-
+    Log.d("ideasScreen", "ideasService: $ideasService")
+    Log.d(user?.id.toString(), "user: $user")
     LaunchedEffect(ideasService) {
         coroutineScope.launch {
             ideas = ideasService.fetch()
