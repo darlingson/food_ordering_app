@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 //            AppContent(Appwrite.account, Appwrite.ideas)
-            BottomNavigationBar(Appwrite.account, Appwrite.ideas)
+            BottomNavigationBar(Appwrite.account, Appwrite.ideas, Appwrite.menuItems)
         }
     }
 }
@@ -109,7 +109,7 @@ private fun AppBottomBar(screen: MutableState<Screen>) {
 //    }
 //}
 @Composable
-fun BottomNavigationBar(accountService: AccountService, ideasService: IdeaService) {
+fun BottomNavigationBar(accountService: AccountService, ideasService: IdeaService, menuItems: Any?) {
     var navigationSelectedItem by remember {
         mutableStateOf(0)
     }
