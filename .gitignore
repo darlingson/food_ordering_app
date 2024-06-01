@@ -13,5 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-app/src/main/res/java/com/codeshinobi/foodorderingapp/Appwrite.kt
-app/src/main/res/java/com/codeshinobi/foodorderingapp/AppwriteService.kt
+app/src/main/res/java/com/codeshinobi/foodorderingapp/services/AppwriteService.kt
+app/src/main/res/java/com/codeshinobi/foodorderingapp/services/Appwrite.kt
