@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.codeshinobi.foodorderingapp.services.IdeaService
 import io.appwrite.models.Document
 import io.appwrite.models.User
@@ -30,7 +31,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun IdeasScreen(
     user: User<Map<String, Any>>?,
-    ideasService: IdeaService
+    ideasService: IdeaService,
+    navController: NavHostController
 ) {
     var ideas by remember { mutableStateOf<List<Document<Map<String, Any>>>>(listOf()) }
     val coroutineScope = rememberCoroutineScope()

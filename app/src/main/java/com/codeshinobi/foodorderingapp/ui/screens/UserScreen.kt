@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.codeshinobi.foodorderingapp.services.AccountService
 import io.appwrite.models.User
 import kotlinx.coroutines.launch
@@ -31,7 +32,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun UserScreen(
     user: MutableState<User<Map<String, Any>>?>,
-    accountService: AccountService
+    accountService: AccountService,
+    navController: NavHostController
 ) {
     val coroutineScope = rememberCoroutineScope()
     var error by remember { mutableStateOf<String?>(null) }
