@@ -32,9 +32,13 @@ import com.codeshinobi.foodorderingapp.services.Appwrite
 import com.codeshinobi.foodorderingapp.ui.screens.UserScreen
 import com.codeshinobi.foodorderingapp.ui.theme.FoodOrderingAppTheme
 import io.appwrite.models.User
+import androidx.compose.material.icons.filled.List
+import com.codeshinobi.foodorderingapp.services.Appwrite.ideas
+import com.codeshinobi.foodorderingapp.services.IdeaService
+import com.codeshinobi.foodorderingapp.ui.screens.IdeasScreen
 
 enum class Screen {
-    User
+    User, Ideas
 }
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +47,7 @@ class MainActivity : ComponentActivity() {
         Appwrite.init(applicationContext)
 
         setContent {
-            AppContent(Appwrite.account)
+            AppContent(Appwrite.account, Appwrite.ideas)
         }
     }
 }
@@ -54,6 +58,12 @@ private fun AppBottomBar(screen: MutableState<Screen>) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
+            IconButton(onClick = { screen.value = Screen.Ideas }) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Icon(Icons.Default.List, contentDescription = "Ideas")
+                    Text("Ideas")
+                }
+            }
             IconButton(onClick = { screen.value = Screen.User }) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(Icons.Default.Person, contentDescription = "User")
@@ -67,9 +77,9 @@ private fun AppBottomBar(screen: MutableState<Screen>) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun AppContent(accountService: AccountService) {
+private fun AppContent(accountService: AccountService, ideasService: IdeaService) {
     val user = remember { mutableStateOf<User<Map<String, Any>>?>(null) }
-    val screen = remember { mutableStateOf(Screen.User) }
+    val screen = remember { mutableStateOf(Screen.Ideas) }
 
     LaunchedEffect(screen) {
         user.value = accountService.getLoggedIn()
@@ -79,7 +89,7 @@ private fun AppContent(accountService: AccountService) {
         Column(modifier = Modifier.padding(padding)) {
             when (screen.value) {
                 Screen.User -> UserScreen(user, accountService)
-                else -> Text("Ideas screen")
+                else -> IdeasScreen(user.value, ideasService)
             }
         }
     }
