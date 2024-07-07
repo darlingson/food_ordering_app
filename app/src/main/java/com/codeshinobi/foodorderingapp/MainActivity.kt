@@ -35,14 +35,17 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.codeshinobi.foodorderingapp.models.Screens
 import com.codeshinobi.foodorderingapp.services.IdeaService
 import com.codeshinobi.foodorderingapp.services.MenuItemService
 import com.codeshinobi.foodorderingapp.ui.screens.HomeScreen
 import com.codeshinobi.foodorderingapp.ui.screens.IdeasScreen
+import com.codeshinobi.foodorderingapp.ui.screens.MenuDetailsScreen
 
 enum class Screen {
     Home, User, Ideas
@@ -165,6 +168,17 @@ fun BottomNavigationBar(accountService: AccountService, ideasService: IdeaServic
                 }
                 composable(Screens.Profile.route) {
                     UserScreen(user, accountService, navController)
+                }
+                composable(
+                    Screens.Menu.route +"/{menuId}",
+                    arguments = listOf(navArgument("menuId") { type = NavType.StringType })
+                ) {
+                    MenuDetailsScreen(
+                        user = user,
+                        menuItemsService =  menuItemsService,
+                        navController = navController,
+                        menuItemId = it.arguments?.getString("menuId")!!
+                    )
                 }
             }
     }
