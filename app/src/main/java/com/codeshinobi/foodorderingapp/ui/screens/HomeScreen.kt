@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -36,6 +37,7 @@ import io.appwrite.models.Document
 import io.appwrite.models.User
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavHostController,
@@ -76,7 +78,10 @@ fun HomeScreen(
                                 width = 150.dp,
                                 height = 150.dp)
                                 .padding(10.dp),
-                            shape = CardDefaults.elevatedShape
+                            shape = CardDefaults.elevatedShape,
+                            onClick = {
+                                navController.navigate(Screens.Menu.route + "/" + menuitems[it].id)
+                            }
                         ) {
                             menuitems[it].data["title"]?.toString()?.let {
                                 Text(text = it,
@@ -94,13 +99,6 @@ fun HomeScreen(
                                         fontWeight = FontWeight.SemiBold
                                     )
                                 )
-                            }
-                            if(menuitems[it].id != null){
-                                navController.navigate(Screens.Menu.route + "/" + menuitems[it].id)
-                            }
-                            else{
-                                Toast.makeText(mContext, menuitems[it].id, Toast.LENGTH_LONG).show()
-                                Toast.makeText(mContext, "This is a Sample Toast", Toast.LENGTH_LONG).show()
                             }
                         }
                     }
