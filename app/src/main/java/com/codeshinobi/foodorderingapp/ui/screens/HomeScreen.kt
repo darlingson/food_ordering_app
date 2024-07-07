@@ -1,6 +1,7 @@
 package com.codeshinobi.foodorderingapp.ui.screens
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,11 +24,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.codeshinobi.foodorderingapp.models.Screens
 import com.codeshinobi.foodorderingapp.services.MenuItemService
 import io.appwrite.models.Document
 import io.appwrite.models.User
@@ -44,6 +47,8 @@ fun HomeScreen(
     var menuitems by remember { mutableStateOf<List<Document<Map<String, Any>>>>(listOf()) }
     val coroutineScope = rememberCoroutineScope()
     var search by remember { mutableStateOf("") }
+
+    val mContext = LocalContext.current
     LaunchedEffect(menuItemsService) {
         coroutineScope.launch {
             menuitems = menuItemsService.fetch()
@@ -89,6 +94,13 @@ fun HomeScreen(
                                         fontWeight = FontWeight.SemiBold
                                     )
                                 )
+                            }
+                            if(menuitems[it].id != null){
+                                navController.navigate(Screens.Menu.route + "/" + menuitems[it].id)
+                            }
+                            else{
+                                Toast.makeText(mContext, menuitems[it].id, Toast.LENGTH_LONG).show()
+                                Toast.makeText(mContext, "This is a Sample Toast", Toast.LENGTH_LONG).show()
                             }
                         }
                     }

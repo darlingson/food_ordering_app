@@ -22,6 +22,13 @@ class MenuItemService(client : Client) {
         ).documents
     }
 
+    suspend fun fetchById(id: String): Document<Map<String, Any>> {
+        return databases.getDocument(
+            FoodOrderingDBId,
+            MenuItemCollectionId,
+            id
+        )
+    }
     suspend fun add(
         userId: String,
         title: String,
